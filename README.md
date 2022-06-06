@@ -1,24 +1,22 @@
 # template-vue-cli-element
+使用 vue-cli 构建，基于 ElementPlus 搭建的前端基础工程
 
-## Project setup
+## 安装依赖
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 开发编译和热更新
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 生产编译和代码压缩
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### 格式化/修复代码风格
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
