@@ -1,9 +1,9 @@
 <template>
-  <div id="home">123</div>
+  <div class="filter-bar"></div>
 </template>
 <script setup lang="ts">
 // eslint-disable-next-line no-undef
 defineOptions({
-  name: 'HomeView',
+  name: 'FilterBar',
 })
 </script>
