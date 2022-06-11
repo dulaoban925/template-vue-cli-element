@@ -1,6 +1,7 @@
-import CompleteMenuVue from './complete-menu.vue'
+import { withInstall } from '@/utils'
+import CompleteMenuVue from './src/complete-menu.vue'
 
-export const CompleteMenu = CompleteMenuVue
+export const CompleteMenu = withInstall(CompleteMenuVue)
 export default CompleteMenu
 
-export * from './complete-menu'
+export * from './src/complete-menu'
