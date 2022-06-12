@@ -1,0 +1,10 @@
+// css 类命名空间
+$namespace: 'gg' !default;
+// 通用类分隔符
+$common-separator: '-' !default;
+// element 类分隔符
+$element-separator: '__' !default;
+// modifier 类分隔符
+$modifier-separator: '--' !default;
+// 状态类分隔符
+$state-prefix: 'is-' !default;

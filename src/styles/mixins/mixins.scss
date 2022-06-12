@@ -1,0 +1,82 @@
+/**
+ * scss 样式混入
+ * @anchor SuperYing
+ * @date 2022/06/12 21:07:39
+ */
+@use './config.scss';
+@use './function.scss';
+
+// BEM
+// 生成 block 类
+@mixin b($block) {
+  $B: $namespace + '-' + $block !global;
+
+  .#{$B} {
+    @content;
+  }
+}
+
+// 生成 element 类，允许并列生成多个
+@mixin e($element) {
+  $E: $element !global;
+  $selector: &;
+  $currentSelector: '';
+  @each $unit in $element {
+    $currentSelector: #{
+      $currentSelector
+      + '.'
+      + $B
+      + $element-separator
+      + $unit
+      + ','
+    }
+  }
+
+  // 如果父选择器命中嵌套规则，即存在某种特殊场景才会应用的样式
+  @if (hitAllSpecialNestRule($selector)) {
+    @at-root {
+      #{$selector} {
+        #{$currentSelector} {
+          @content;
+        }
+      }
+    }
+  } @else {
+    @at-root {
+      #{$currentSelector} {
+        @content;
+      }
+    }
+  }
+}
+
+// 生成 modifier 类，允许生成并列多个
+@mixin m($modifier) {
+  $selector: &;
+  $currentSelector: '';
+
+  @each $unit in $modifier {
+    $currentSelector: #{
+      $currentSelector
+      + selector
+      + $modifier-separator
+      + $unit
+      + ','
+    }
+  }
+
+  @at-root {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}
+
+// 生成状态类
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+/**
+ * scss 函数
+ * @anchor SuperYing
+ * @date 2022/06/12 21:39:03
+ */
+@use './config.scss';
+
+// 将选择器转为字符串
+@function selectorToString($selector) {
+  $selector: inspect($selector);
+  $selector: str-slice($selector, 2, -2);
+  @return $selector;
+}
+
+// 选择器是否包含 modifier
+@function containsModifier($selector) {
+  $selector: selectorToString($selector);
+
+  @if(str-index($selector, $modifier-separator)) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+// 选择器是否包含状态
+@function containsWhen($selector) {
+  $selector: selectorToString($selector);
+
+  @if(str-index($selector, $state-prefix)) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+// 选择器是否包含伪类
+@function containPseudoClass($selector) {
+  $selector: selectorToString($selector);
+
+  @if(str-index($selector, ':')) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+// 是否命中所有嵌套规则
+@function hitAllSpecialNestRule($selector) {
+  @return containsModifier($selector) or containPseudoClass($selector) or containPseudoClass($selector);
+}
+
+
