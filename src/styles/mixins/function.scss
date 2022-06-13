@@ -50,6 +50,21 @@
 @function hitAllSpecialNestRule($selector) {
   @return containsModifier($selector) or containPseudoClass($selector) or containPseudoClass($selector);
 }
+
+// bem('block', 'element', 'modifier') => 'el-block__element--modifier'
+@function bem($block, $element: '', $modifier: '') {
+  $name: $namespace + $common-separator + $block;
+
+  @if $element != '' {
+    $name: $name + $element-separator + $element;
+  }
+
+  @if $modifier != '' {
+    $name: $name + $modifier-separator + $modifier;
+  }
+
+  @return $name;
+}
 /** scss 类名相关 end */
 
 /** css 变量相关 start */

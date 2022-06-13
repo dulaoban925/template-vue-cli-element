@@ -5,7 +5,7 @@
  -->
 <template>
   <div class="app-wrapper">
-    <toolbar title=""></toolbar>
+    <toolbar title="SuperYing 的前端模板" />
     <el-container class="content-container">
       <complete-menu />
       <el-main class="page-wrapper">

@@ -58,7 +58,7 @@
   @each $unit in $modifier {
     $currentSelector: #{
       $currentSelector
-      + selector
+      + $selector
       + $modifier-separator
       + $unit
       + ','

@@ -1,3 +1,8 @@
+<!--
+  顶部工具栏
+  @anchor SuperYing
+  @date 2022/06/13 22:02:54
+ -->
 <template>
   <div :class="ns.b()">
     <!-- 左侧login 及描述 -->
@@ -24,12 +29,12 @@
         <template #content>我要提问</template>
         <el-badge :hidden="true">
           <el-icon size="25px" color="#FFF" :class="ns.e('icon')" @click="handleHelpClick">
-            <QuestionFilled></QuestionFilled>
+            <QuestionFilled />
           </el-icon>
         </el-badge>
       </el-tooltip>
       <el-badge :hidden="msgNum === 0" :value="msgNum" :class="ns.e('icon')">
-        <el-icon size="25px" color="#FFF" @click="handleMessageClick"><Bell></Bell></el-icon>
+        <el-icon size="25px" color="#FFF" @click="handleMessageClick"><Bell /></el-icon>
       </el-badge>
       <el-dropdown trigger="click" :popper-class="ns.e('dropdown')" @command="handleAvatarCommand">
         <el-avatar v-if="avatarUrl" :size="30" :src="avatarUrl" :class="ns.e('avatar')"></el-avatar>
@@ -48,6 +53,7 @@
 import { defineProps, defineEmits, toRefs } from 'vue'
 import { useNamespace } from '@/hooks'
 import { toolbarProps, toolbarEmits, AvatarOptItem } from './toolbar'
+import { QuestionFilled, Bell } from '@element-plus/icons-vue'
 // eslint-disable-next-line no-undef
 defineOptions({
   name: 'Toolbar',
