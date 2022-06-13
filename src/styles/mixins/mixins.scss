@@ -100,3 +100,10 @@
   justify-content: space-between;
 }
 /** flex end */
+/** css 变量相关 start */
+@mixin set-component-css-var($name, $variables) {
+  @each $attribute, $value in $variables {
+    #{getCssVarName($name, $attribute)}: #{$value}
+  }
+}
+/** css 变量相关 end */

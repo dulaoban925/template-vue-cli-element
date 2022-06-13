@@ -3,8 +3,9 @@
  * @anchor SuperYing
  * @date 2022/06/12 21:39:03
  */
-@use './config.scss';
+@use './config.scss' as *;
 
+/** scss 类名相关 start */
 // 将选择器转为字符串
 @function selectorToString($selector) {
   $selector: inspect($selector);
@@ -49,5 +50,38 @@
 @function hitAllSpecialNestRule($selector) {
   @return containsModifier($selector) or containPseudoClass($selector) or containPseudoClass($selector);
 }
+/** scss 类名相关 end */
+
+/** css 变量相关 start */
+// 拼接变量名称
+// joinVarName(('button', 'text-color')) => '--el-button-text-color'
+@function joinVarName($list) {
+  $name: '--' + $namespace;
+  @each $item in $list {
+    @if $item != '' {
+      $name: $name + '-' + $item;
+    }
+  }
+  @return $name;
+}
+
+// 获取变量名称
+// getCssVarName('button', 'text-color') => '--el-button-text-color'
+@function getCssVarName($args...) {
+  @return joinVarName($args);
+}
+
+// 获取变量的值
+// getCssVar('button', 'text-color') => var(--el-button-text-color)
+@function getCssVar($args...) {
+  @return var(#{joinVarName($args)});
+}
+
+// 获取变量值，若无，赋默认值
+// getCssVarWithDefault(('button', 'text-color'), red) => var(--el-button-text-color, red)
+@function getCssVarWithDefault($args, $default) {
+  @return var(#{joinVarName($args)}, #{$default});
+}
+/** css 变量相关 end */
 
 
