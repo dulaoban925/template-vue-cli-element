@@ -17,7 +17,7 @@ const _bem = (block: string, blockSuffix?: string, element?: string, modifier?: 
   return cls
 }
 
-export default function useNamespace(block: string) {
+export function useNamespace(block: string) {
   // block 类名
   const b = (blockSuffix = '') => _bem(block, blockSuffix)
   // element 类名
