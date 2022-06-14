@@ -97,6 +97,21 @@
 @function getCssVarWithDefault($args, $default) {
   @return var(#{joinVarName($args)}, #{$default});
 }
+
+// 获取 element-plus 的变量名
+@function getElCssVarName($args...) {
+  $name: '--el';
+  @each $item in $args {
+    @if $item != '' {
+      $name: $name + $common-separator + $item
+    }
+  }
+  @return $name; 
+}
+// 获取 element-plus 的变量值
+@function getElCssVar($args...) {
+  @return var(#{getElCssVarName($args)});
+}
 /** css 变量相关 end */
 
 

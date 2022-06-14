@@ -4,7 +4,7 @@
  * 类名采用 block、element、modifier 模式命名（即 bem）
  */
 // 命名空间，与 scss 命名空间一致
-export const globalNamespace = 'el'
+export const globalNamespace = 'gg'
 // 状态 class 类前缀
 const statePrefix = 'is-'
 
@@ -38,7 +38,7 @@ export function useNamespace(block: string) {
     return name && state ? `${statePrefix}${name}` : ''
   }
 
-  // css 变量 --el-xxx: value
+  // css 变量 --gg-xxx: value
   const cssVarName = (name: string) => `--${globalNamespace}-${name}`
   const cssVar = (object: Record<string, string>) => {
     const styles: Record<string, string> = {}

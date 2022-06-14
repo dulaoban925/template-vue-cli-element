@@ -16,9 +16,9 @@ $toolbar: map.merge(
     'content-padding': 20px,
     'content-half-padding': 10px,
     'content-margin': 20px,
-    'text-color': getCssVar('color-white'),
-    'hover-color': getCssVar('color-primary-light-9'),
-    'hover-text-color': getCssVar('color-primary'),
+    'text-color': getElCssVar(color-white),
+    'hover-color': getElCssVar(color-primary-light-9),
+    'hover-text-color': getElCssVar(color-primary),
   ),
   $toolbar
 );
