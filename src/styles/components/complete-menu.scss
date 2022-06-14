@@ -1,0 +1,21 @@
+/**
+ * 左侧导航菜单样式
+ * @anchor SuperYing
+ * @date 2022/06/14 22:02:25
+ */
+@use '../mixins/mixins.scss' as *;
+@use '../mixins/function.scss' as *;
+@use '../mixins/var.scss' as *;
+@use '../mixins/config.scss' as *;
+
+@include b(complete-menu) {
+  @include set-component-css-var('complete-menu', $complete-menu);
+
+  width: getCssVar('complete-menu', 'width');
+  height: getCssVar('complete-menu', 'height');
+
+  & .el-sub-menu__title,
+  & .el-menu-item {
+    height: getCssVar('complete-menu', 'item-height')
+  }
+}

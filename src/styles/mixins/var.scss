@@ -22,3 +22,13 @@ $toolbar: map.merge(
   ),
   $toolbar
 );
+
+$complete-menu: () !default;
+$complete-menu: map.merge(
+  (
+    'width': 250px,
+    'height': 100%,
+    'item-height': 40px,
+  ),
+  $complete-menu
+);
