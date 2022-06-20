@@ -16,6 +16,7 @@
 
   & .el-sub-menu__title,
   & .el-menu-item {
-    height: getCssVar('complete-menu', 'item-height')
+    height: getCssVar('complete-menu', 'item-height');
+    line-height: getCssVar('complete-menu', 'item-height');
   }
 }

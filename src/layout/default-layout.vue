@@ -58,6 +58,6 @@ const menuData = ref([
         label: '二级菜单2.3',
       },
     ],
-  }
+  },
 ])
 </script>

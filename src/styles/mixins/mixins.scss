@@ -3,8 +3,13 @@
  * @anchor SuperYing
  * @date 2022/06/12 21:07:39
  */
+@use 'sass:map';
+
 @use './config.scss' as *;
 @use './function.scss' as *;
+@forward 'config';
+@forward 'function';
+@forward 'var';
 
 // BEM
 // 生成 block 类
@@ -105,5 +110,9 @@
   @each $attribute, $value in $variables {
     #{getCssVarName($name, $attribute)}: #{$value}
   }
+}
+/** 定义组件指定变量 */
+@mixin set-component-css-var-attr($name, $variables, $attribute) {
+  #{getCssVarName($name, $attribute)}: map.get($variables, $attribute)
 }
 /** css 变量相关 end */
