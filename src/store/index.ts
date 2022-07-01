@@ -1,3 +1,8 @@
 import { createStore } from 'vuex'
+import tagsView from './modules/tags-view'
 
-export default createStore({})
+// Vuex 模块
+const modules = {
+  tagsView,
+}
+export default createStore({ modules })
