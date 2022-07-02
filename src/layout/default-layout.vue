@@ -9,6 +9,7 @@
     <el-container class="content-container">
       <complete-menu :data="menuData" />
       <el-main class="page-wrapper">
+        <tag-view />
         <app-main />
       </el-main>
     </el-container>
@@ -16,7 +17,8 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import AppMain from './app-main.vue'
+import AppMain from './components/app-main.vue'
+import TagView from './components/tag-view.vue'
 // eslint-disable-next-line no-undef
 defineOptions({
   name: 'DefaultLayout',
