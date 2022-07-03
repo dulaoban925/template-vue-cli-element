@@ -5,7 +5,7 @@
  -->
 <template>
   <div class="scroll-pane">
-    
+    <slot />
   </div>
 </template>
 <script setup lang="ts">

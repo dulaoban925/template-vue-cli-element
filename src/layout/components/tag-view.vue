@@ -38,12 +38,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ComponentPublicInstance, computed, ref, watch } from 'vue'
+import { ComponentPublicInstance, computed, ref, watch, onMounted } from 'vue'
 import { useNamespace, useTagView } from '@/hooks'
 import ScrollPane from './scroll-pane.vue'
 import { Postcard, Close } from '@element-plus/icons-vue'
 import ContextMenu from './tag-context-menu.vue'
 import type { TagView } from '@/store/modules/tag-view'
+import path from 'path'
+import { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
 
 // eslint-disable-next-line no-undef
 defineOptions({
@@ -59,7 +61,9 @@ const tags = ref([] as (Element | ComponentPublicInstance)[])
 const scrollPane = ref<HTMLElement | null>(null)
 
 // 当前展示的页签
-const visitedViews = computed(() => $store.state.tagsView.visitedViews)
+const visitedViews = computed(() => $store.state.tagView.visitedViews)
+
+console.log(visitedViews.value)
 // 右键菜单显隐标识
 const contextMenuVisible = ref(false)
 const contextMenuPosition = ref({})
@@ -75,13 +79,44 @@ const openContextMenu = (tag: TagView, e: MouseEvent) => {
   contextMenuSelected.value = tag
 }
 
-// TODO:添加视图
-const addTag = () => {}
+// 添加视图
+const addTag = () => {
+  // route 必须有 name 信息
+  if ($route.name) {
+    $store.dispatch('tagView/addView', $route)
+  }
+}
+
+// 筛选出固定的标签
+const filterAffixTags = (routes: (RouteRecordNormalized | RouteRecordRaw)[], basePath = '/') => {
+  let tags: TagView[] = []
+  routes.forEach(route => {
+    if (route.meta && route.meta.affix) {
+      const tagPath = path.resolve(basePath, route.path)
+      tags.push({
+        fullPath: tagPath,
+        path: tagPath,
+        name: route.name,
+        meta: { ...route.meta },
+      })
+    }
+    if (route.children) {
+      const childTags = filterAffixTags(route.children, route.path)
+      if (childTags.length >= 1) {
+        tags = [...tags, ...childTags]
+      }
+    }
+  })
+  return tags
+}
 
 watch(
   () => $route.fullPath,
   () => {
     addTag()
+  },
+  {
+    immediate: true,
   }
 )
 </script>

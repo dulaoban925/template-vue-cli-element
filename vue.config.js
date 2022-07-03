@@ -33,6 +33,8 @@ module.exports = defineConfig({
       alias: {
         '@': resolve('src'),
       },
+      // 解决 webpack 打包 node 内置工具（如 path）报错问题
+      fallback: { path: require.resolve('path-browserify') },
     },
     plugins: [DefineOption()],
   },

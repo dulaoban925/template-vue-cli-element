@@ -17,7 +17,7 @@ export interface State {
 }
 
 export default {
-  namespace: true,
+  namespaced: true,
 
   state: () => ({
     visitedViews: [], // 查看的页签
