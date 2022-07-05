@@ -1,0 +1,61 @@
+/**
+ * 页签视图
+ * @anchor SuperYing
+ * @date 2022/07/05 20:23:10
+ */
+@use '../mixins/mixins.scss' as *;
+
+@include b(tag-view) {
+  @include set-component-css-var('tag-view', $tag-view);
+  display: inline-block;
+  height: getCssVar('tag-view', 'height');
+  width: 100%;
+
+  @include e(wrapper) {
+    text-align: left;
+  }
+
+  @include e(item) {
+    display: inline-block;
+    cursor: pointer;
+    height: getCssVar('tag-view', 'height');
+    line-height: getCssVar('tag-view', 'height');
+    color: getElCssVar(text-color-primary);
+    background: getElCssVar(bg-color);
+    padding: 0 getCssVar('tag-view', 'item-padding');;
+    font-size: getCssVar('tag-view', 'font-size');
+    position: relative;
+    text-decoration: none;
+
+    &:not(:last-child) {
+      margin-right: getCssVar('tag-view', 'item-gap');
+    }
+
+    i {
+      vertical-align: -2px;
+    }
+
+    @include when(active) {
+      background-color: #FFFFFF;
+      color: getElCssVar(color-primary);
+    }
+  }
+
+  @include e(close-icon) {
+    width: getCssVar('tag-view', 'icon-size');
+    height: getCssVar('tag-view', 'icon-size');
+    line-height: getCssVar('tag-view', 'icon-size');
+    border-radius: 50%;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform-origin: 100% 50%;
+    &::before {
+      transform: scale(0.6);
+      display: inline-block;
+    }
+    &:hover {
+      background-color: getElCssVar(color-info);
+      color: getElCssVar(color-white);
+    }
+  }
+}

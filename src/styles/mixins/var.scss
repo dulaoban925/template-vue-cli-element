@@ -32,3 +32,15 @@ $complete-menu: map.merge(
   ),
   $complete-menu
 );
+
+$tag-view: () !default;
+$tag-view: map.merge(
+  (
+    'height': 40px,
+    'item-gap': 4px,
+    'item-padding': 8px,
+    'font-size': 14px,
+    'icon-size': 16px,
+  ),
+  $tag-view
+)

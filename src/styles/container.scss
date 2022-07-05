@@ -4,7 +4,6 @@
  * @date 2022/06/20 21:44:30
  */
 @use './mixins/mixins.scss' as *;
-// @use './mixins/var.scss';
 
 html,
 body,
@@ -14,6 +13,7 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
+  background: getElCssVar(bg-color-page)
 }
 
 .content-container {

@@ -16,7 +16,7 @@
         :key="tag.fullPath"
         :class="{
           [ns.e('item')]: true,
-          active: isActive(tag),
+          [ns.is('active')]: isActive(tag),
         }"
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         @contextmenu.prevent="openContextMenu(tag, $event)"
@@ -27,7 +27,7 @@
         <span style="padding: 0 10px">{{ tag.title }}</span>
         <el-icon
           v-if="!isAffix(tag)"
-          class="close-icon"
+          :class="ns.e('close-icon')"
           @click.prevent.stop="closeSelectedTag(tag)"
         >
           <close />
