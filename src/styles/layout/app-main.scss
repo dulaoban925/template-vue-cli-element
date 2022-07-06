@@ -1,0 +1,14 @@
+/**
+ * app-main 样式
+ * @anchor SuperYing
+ * @date 2022/07/06 21:19:25
+ */
+ @use '../mixins/mixins.scss' as *;
+
+ @include b(app-main) {
+  @include set-component-css-var('app-main', $app-main);
+
+   height: getCssVar('app-main', 'height');
+   padding: 10px;
+   background-color: getElCssVar(color-white);
+ }

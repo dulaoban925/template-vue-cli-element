@@ -63,7 +63,6 @@ const scrollPane = ref<HTMLElement | null>(null)
 // 当前展示的页签
 const visitedViews = computed(() => $store.state.tagView.visitedViews)
 
-console.log(visitedViews.value)
 // 右键菜单显隐标识
 const contextMenuVisible = ref(false)
 const contextMenuPosition = ref({})
@@ -111,7 +110,7 @@ const filterAffixTags = (routes: (RouteRecordNormalized | RouteRecordRaw)[], bas
 }
 
 watch(
-  () => $route.fullPath,
+  () => $route.path,
   () => {
     addTag()
   },

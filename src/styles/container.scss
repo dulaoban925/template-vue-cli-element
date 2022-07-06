@@ -16,6 +16,18 @@ body,
   background: getElCssVar(bg-color-page)
 }
 
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+.page-wrapper {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
 .content-container {
   @include set-component-css-var-attr('toolbar', $toolbar, 'height');
   height: calc(100% - getCssVar('toolbar', 'height'));

@@ -14,7 +14,7 @@ export function useTagView() {
 
   // 判断指定页签是否激活
   function isActive(view: TagView) {
-    return view.fullPath === $route.fullPath
+    return view.path === $route.path
   }
 
   // 页签是否固定

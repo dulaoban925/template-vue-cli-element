@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Layout from '@/layout/default-layout.vue'
+import { useSystemManage } from './modules/system-manage'
+const Layout = () => import('@/layout/default-layout.vue')
 
 // 401
 const noAuthComponent = () => import('@/views/errorpage/no-auth.vue')
@@ -8,7 +9,10 @@ const noAuthComponent = () => import('@/views/errorpage/no-auth.vue')
 const notFoundComponent = () => import('@/views/errorpage/not-found.vue')
 
 // 工作台
-import Dashboard from '@/views/dashboard/index.vue'
+const Dashboard = import('@/views/dashboard/index.vue')
+
+// 系统管理
+const systemManageRoutes = useSystemManage(Layout)
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -34,6 +38,7 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  systemManageRoutes,
   {
     path: '/:pathMatch(.*)*',
     redirect: '/404',
