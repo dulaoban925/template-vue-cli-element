@@ -7,7 +7,7 @@
   <div class="app-wrapper">
     <toolbar title="SuperYing 的前端模板" />
     <el-container class="content-container">
-      <complete-menu :data="menuData" />
+      <complete-menu :data="menuData" @select="handleMenuSelect" />
       <el-main class="page-wrapper">
         <tag-view />
         <app-main />
@@ -16,30 +16,39 @@
   </div>
 </template>
 <script setup lang="ts">
+import { MenuItemClicked } from 'element-plus'
 import { ref } from 'vue'
+import { NavigationFailure } from 'vue-router'
 import AppMain from './components/app-main.vue'
 import TagView from './components/tag-view.vue'
+import { useRouter } from 'vue-router'
 // eslint-disable-next-line no-undef
 defineOptions({
   name: 'DefaultLayout',
 })
 
+const $router = useRouter()
+
 const menuData = ref([
   {
-    index: '1',
-    label: '一级菜单1',
+    index: 'system-manage',
+    label: '菜单管理',
     children: [
       {
-        index: '1.1',
-        label: '二级菜单1.1',
+        index: '/system-manage/user',
+        label: '用户管理',
       },
       {
-        index: '1.2',
-        label: '二级菜单1.2',
+        index: '/system-manage/menu',
+        label: '菜单管理',
       },
       {
-        index: '1.3',
-        label: '二级菜单1.3',
+        index: '/system-manage/auth',
+        label: '权限管理',
+      },
+      {
+        index: '/system-manage/role',
+        label: '角色管理',
       },
     ],
   },
@@ -62,4 +71,14 @@ const menuData = ref([
     ],
   },
 ])
+
+// 选择菜单
+const handleMenuSelect = (
+  index: string,
+  indexPath: string[],
+  item: MenuItemClicked,
+  routerResult?: Promise<void | NavigationFailure>
+) => {
+  $router.push(index)
+}
 </script>
