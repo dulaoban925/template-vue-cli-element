@@ -1,7 +1,7 @@
 import { withInstall } from '@/utils'
-import CompleteMenuVue from './src/complete-menu'
+import CompleteMenu from './src/complete-menu'
 
-export const CompleteMenu = withInstall(CompleteMenuVue)
-export default CompleteMenu
+export const GgCompleteMenu = withInstall(CompleteMenu)
+export default GgCompleteMenu
 
 export * from './src/complete-menu'

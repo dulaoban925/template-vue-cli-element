@@ -5,9 +5,9 @@
  -->
 <template>
   <div class="app-wrapper">
-    <toolbar title="SuperYing 的前端模板" />
+    <gg-toolbar title="SuperYing 的前端模板" />
     <el-container class="content-container">
-      <complete-menu :data="menuData" @select="handleMenuSelect" />
+      <gg-complete-menu :data="menuData" @select="handleMenuSelect" />
       <el-main class="page-wrapper">
         <tag-view />
         <app-main />

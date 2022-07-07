@@ -5,3 +5,5 @@
  */
 export * from './useNamespace'
 export * from './useTagView'
+export * from './useInstance'
+export * from './usePagination'

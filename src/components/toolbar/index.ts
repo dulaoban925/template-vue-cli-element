@@ -1,7 +1,7 @@
 import { withInstall } from '@/utils'
-import ToolbarVue from './src/toolbar.vue'
+import Toolbar from './src/toolbar.vue'
 
-export const Toolbar = withInstall(ToolbarVue)
-export default Toolbar
+export const GgToolbar = withInstall(Toolbar)
+export default GgToolbar
 
 export * from './src/toolbar'
