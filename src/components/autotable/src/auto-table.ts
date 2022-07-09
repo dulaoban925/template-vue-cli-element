@@ -3,14 +3,14 @@
  * @anchor SuperYing
  * @date 2022/06/16 23:02:24
  */
-import { defineComponent, h, toRefs, ref, watch, reactive, computed } from 'vue'
+import { defineComponent, h, toRefs, ref, watch, reactive, computed, provide } from 'vue'
 import { useNamespace } from '@/hooks'
 import { ElTable, ElPagination } from 'element-plus'
 import ElAutoTableOperation from './operations'
-import { COLUMN_KEY } from './constants'
+import { COLUMN_KEY, AUTO_TABLE } from './constants'
 import useTable from './hooks/useTable'
 import usePagination from './hooks/usePagination'
-import type { PropType } from 'vue'
+import type { PropType, RawSlots, VNode } from 'vue'
 
 const COMPONENT_NAME = 'ElAutoTable'
 export default defineComponent({
@@ -59,26 +59,40 @@ export default defineComponent({
     // pagination 接收的属性
     const paginationProps = usePagination(props)
 
+    // 是否使用 V-for 遍历生成的 table-column
+    const defaultSlot: RawSlots = slots.default?.() || []
+    const isVFor = computed(
+      () => defaultSlot?.length && defaultSlot[0].type.name !== 'ElTableColumn'
+    )
     // Table 下所有的列
-    const columnNodes = slots.default?.() || []
-    // 可见列 column-key
-    const visibleColumnKey = ref(visibleColumnKeys.value)
+    const columnNodes = ref<VNode[]>([])
+    const getAllColumnNodes = (nodes: RawSlots) => {
+      const filterNodes = isVFor.value ? nodes[0].children : nodes
+      columnNodes.value =
+        filterNodes?.filter((node: any) => node.type.name === 'ElTableColumn') || []
+    }
+    getAllColumnNodes(defaultSlot)
     // 可见列 vnode
     const visibleColumnNodes = ref(
-      columnNodes.filter(columnNode => !!columnNode?.props?.[COLUMN_KEY])
+      columnNodes.value.filter(columnNode => !!columnNode?.props?.[COLUMN_KEY])
+    )
+    // 可见列 column-key
+    const currentVisibleKeys = ref(
+      visibleColumnKeys.value?.length
+        ? visibleColumnKeys.value
+        : visibleColumnNodes.value.map(node => node?.props?.[COLUMN_KEY])
     )
 
     watch(
-      () => visibleColumnKey.value,
+      () => currentVisibleKeys.value,
       val => {
-        if (val?.length)
-          visibleColumnNodes.value = val.reduce((ret: any, key: string) => {
-            const matchColumnNode = columnNodes.filter(
-              columnNode => columnNode?.props?.[COLUMN_KEY] === key
-            )[0]
-            if (matchColumnNode) ret.push(matchColumnNode)
-            return ret
-          }, [])
+        visibleColumnNodes.value = val.reduce((ret: VNode[], key: string) => {
+          const matchColumnNode = columnNodes.value.filter(
+            columnNode => columnNode?.props?.[COLUMN_KEY] === key
+          )[0]
+          if (matchColumnNode) ret.push(matchColumnNode)
+          return ret
+        }, [])
       },
       {
         immediate: true,
@@ -95,8 +109,8 @@ export default defineComponent({
         {
           settable: settable.value,
           columnNodes,
-          'onUpdate:visibleKeys': keys => {
-            visibleColumnKey.value = keys
+          'onUpdate:visibleKeys': (keys: string[]) => {
+            currentVisibleKeys.value = keys
             emit('visible-columns-change', keys)
           },
         },
@@ -151,6 +165,10 @@ export default defineComponent({
         ]
       )
     )
+
+    provide(AUTO_TABLE, {
+      isVFor: isVFor.value,
+    })
 
     return () =>
       h(
