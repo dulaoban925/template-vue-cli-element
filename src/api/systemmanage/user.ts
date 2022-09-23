@@ -5,7 +5,7 @@
  */
 
 // 分页查询
-export function queryByPage(params, pagination) {}
+export function queryByPage(params: any, pagination: any) {}
 
 // 查询详情
 export function queryDetail() {}

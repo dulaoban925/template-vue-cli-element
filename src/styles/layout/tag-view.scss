@@ -21,7 +21,7 @@
     height: getCssVar('tag-view', 'height');
     line-height: getCssVar('tag-view', 'height');
     color: getElCssVar(text-color-primary);
-    background: getElCssVar(bg-color);
+    background: getElCssVar(color-info-light-8);
     padding: 0 getCssVar('tag-view', 'item-padding');;
     font-size: getCssVar('tag-view', 'font-size');
     position: relative;

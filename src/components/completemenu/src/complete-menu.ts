@@ -11,7 +11,7 @@ export type MenuItem = {
 }
 
 export default defineComponent({
-  name: 'CompleteMenu',
+  name: 'GgCompleteMenu',
   props: {
     // 菜单数据
     data: {

@@ -15,8 +15,10 @@
       :layout="layout"
       :page-sizes="pageSizes"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChang">
-      <el-table-column />
+      @current-change="handleCurrentChang"
+    >
+      <el-table-column column-key="no" prop="no" label="编码"></el-table-column>
+      <el-table-column column-key="name" prop="name" label="姓名"></el-table-column>
     </gg-auto-table>
   </div>
 </template>

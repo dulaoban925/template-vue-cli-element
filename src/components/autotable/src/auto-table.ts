@@ -3,16 +3,26 @@
  * @anchor SuperYing
  * @date 2022/06/16 23:02:24
  */
-import { defineComponent, h, toRefs, ref, watch, reactive, computed, provide } from 'vue'
+import {
+  defineComponent,
+  h,
+  toRefs,
+  ref,
+  watch,
+  reactive,
+  computed,
+  provide,
+  watchEffect,
+} from 'vue'
 import { useNamespace } from '@/hooks'
 import { ElTable, ElPagination } from 'element-plus'
 import ElAutoTableOperation from './operations'
 import { COLUMN_KEY, AUTO_TABLE } from './constants'
 import useTable from './hooks/useTable'
 import usePagination from './hooks/usePagination'
-import type { PropType, RawSlots, VNode } from 'vue'
+import type { PropType, VNode } from 'vue'
 
-const COMPONENT_NAME = 'ElAutoTable'
+const COMPONENT_NAME = 'GgAutoTable'
 export default defineComponent({
   name: COMPONENT_NAME,
   inheritAttrs: false,
@@ -47,6 +57,7 @@ export default defineComponent({
     'visible-columns-change',
   ],
   setup(props, { slots, emit, attrs }) {
+    console.log('auto', props)
     const ns = useNamespace('auto-table')
 
     const table = ref<InstanceType<typeof ElTable>>()
@@ -59,29 +70,36 @@ export default defineComponent({
     // pagination 接收的属性
     const paginationProps = usePagination(props)
 
+    // 默认插槽
+    const defaultSlot: any = computed(() => slots.default?.() || [])
     // 是否使用 V-for 遍历生成的 table-column
-    const defaultSlot: RawSlots = slots.default?.() || []
     const isVFor = computed(
-      () => defaultSlot?.length && defaultSlot[0].type.name !== 'ElTableColumn'
+      () => defaultSlot.value?.length && defaultSlot.value[0].type.name !== 'ElTableColumn'
     )
     // Table 下所有的列
     const columnNodes = ref<VNode[]>([])
-    const getAllColumnNodes = (nodes: RawSlots) => {
+
+    // 获取所有的表格列
+    const getAllColumnNodes = (nodes: any) => {
       const filterNodes = isVFor.value ? nodes[0].children : nodes
-      columnNodes.value =
-        filterNodes?.filter((node: any) => node.type.name === 'ElTableColumn') || []
+      return filterNodes?.filter((node: any) => node.type.name === 'ElTableColumn') || []
     }
-    getAllColumnNodes(defaultSlot)
+
     // 可见列 vnode
-    const visibleColumnNodes = ref(
-      columnNodes.value.filter(columnNode => !!columnNode?.props?.[COLUMN_KEY])
-    )
-    // 可见列 column-key
-    const currentVisibleKeys = ref(
-      visibleColumnKeys.value?.length
+    const visibleColumnNodes = ref<VNode[]>([])
+
+    // 可见列 column-key，若设置了 visibleColumnKeys属性，以visibleColumnKeys为准；否则获取所有配置了 column-key 属性的列的 column-key 数据
+    const currentVisibleKeys = ref<string[]>([])
+
+    watchEffect(() => {
+      columnNodes.value = getAllColumnNodes(defaultSlot.value)
+      currentVisibleKeys.value = visibleColumnKeys.value?.length
         ? visibleColumnKeys.value
-        : visibleColumnNodes.value.map(node => node?.props?.[COLUMN_KEY])
-    )
+        : columnNodes.value.reduce((ret: string[], node: VNode) => {
+            !!node?.props?.[COLUMN_KEY] && ret.push(node?.props?.[COLUMN_KEY])
+            return ret
+          }, [])
+    })
 
     watch(
       () => currentVisibleKeys.value,
@@ -108,7 +126,8 @@ export default defineComponent({
         ElAutoTableOperation,
         {
           settable: settable.value,
-          columnNodes,
+          columnNodes: columnNodes.value,
+          visibleKeys: currentVisibleKeys.value,
           'onUpdate:visibleKeys': (keys: string[]) => {
             currentVisibleKeys.value = keys
             emit('visible-columns-change', keys)

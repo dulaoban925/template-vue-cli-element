@@ -53,3 +53,29 @@ $app-main: map.merge(
   ),
   $app-main
 );
+
+// auto-table
+$auto-table: () !default;
+$auto-table: map.merge(
+  (
+    'operation-space': 5px,
+    'setting-icon-size': 20px,
+    'dialog-header-height': 54px
+  ),
+  $auto-table
+);
+
+$dialog: () !default;
+$dialog: map.merge(
+  (
+    'width': 50%,
+    'margin-top': 15vh,
+    'bg-color': var(--el-color-white),
+    'box-shadow': 0 1px 3px rgba(0, 0, 0, 0.3),
+    'title-font-size': var(--el-font-size-large),
+    'content-font-size': 14px,
+    'font-line-height': var(--el-font-line-height-primary),
+    'padding-primary': 20px,
+  ),
+  $dialog
+);

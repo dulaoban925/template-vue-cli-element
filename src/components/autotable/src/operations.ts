@@ -7,7 +7,6 @@ import { defineComponent, toRefs, ref, h, computed, reactive, inject } from 'vue
 import { Setting } from '@element-plus/icons-vue'
 import { useNamespace } from '@/hooks'
 import { ElButton, ElTree, ElDialog } from 'element-plus'
-import { debugWarn } from 'element-plus/es/utils'
 import { COLUMN_KEY, AUTO_TABLE } from './constants'
 import type { PropType, VNode } from 'vue'
 
@@ -30,7 +29,7 @@ export default defineComponent({
     }>(AUTO_TABLE, {})
 
     if (isVFor)
-      debugWarn('AutoTable', '使用 v-for 循环生成 ElTableColumn 时【列设置】排序功能不生效')
+      console.warn('AutoTable', '使用 v-for 循环生成 ElTableColumn 时【列设置】排序功能不生效')
 
     const treeRef = ref<typeof ElTree | null>(null)
 
@@ -79,12 +78,15 @@ export default defineComponent({
               class: ns.e('right'),
             },
             [
-              h(ElButton, {
-                icon: Setting,
-                type: 'text',
-                class: ns.e('setting-icon'),
-                onClick: () => (dialogVisible.value = true),
-              }),
+              props.settable
+                ? h(ElButton, {
+                    icon: Setting,
+                    type: 'primary',
+                    text: true,
+                    class: ns.e('setting-icon'),
+                    onClick: () => (dialogVisible.value = true),
+                  })
+                : null,
               slots.right?.(),
             ]
           ),
@@ -104,7 +106,7 @@ export default defineComponent({
                 h(
                   ElTree,
                   reactive({
-                    ref: ref => (treeRef.value = ref),
+                    ref: (ref: any) => (treeRef.value = ref),
                     data: columns.value,
                     showCheckbox: true,
                     draggable: true,

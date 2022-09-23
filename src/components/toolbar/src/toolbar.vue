@@ -56,7 +56,7 @@ import { toolbarProps, toolbarEmits, AvatarOptItem } from './toolbar'
 import { QuestionFilled, Bell } from '@element-plus/icons-vue'
 // eslint-disable-next-line no-undef
 defineOptions({
-  name: 'Toolbar',
+  name: 'GgToolbar',
 })
 
 // css 命名空间

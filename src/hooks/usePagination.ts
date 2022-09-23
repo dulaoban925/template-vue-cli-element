@@ -67,9 +67,9 @@ export function usePagination(
     query()
   }
 
-  onMounted(() => {
-    query()
-  })
+  // onMounted(() => {
+  //   query()
+  // })
 
   return {
     pageSize,
